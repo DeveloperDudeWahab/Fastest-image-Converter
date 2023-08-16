@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FutureImage Converter</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #8cce9c;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .section {
+      padding: 100px 0;
+      background: linear-gradient(to bottom, #171717, #0c0c0c);
+      border-top: 5px solid #f3724b;
+      border-bottom: 5px solid #f3724b;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s ease-in-out;
+    }
+
+    .section:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .section-header {
+      font-size: 3rem;
+      font-weight: bold;
+      margin-bottom: 50px;
+      text-align: center;
+    }
+
+    .description {
+      font-size: 1.5rem;
+      line-height: 2;
+      margin-bottom: 30px;
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .feature-title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="section text-center">
+      <h1 class="section-header">Welcome to FutureImage Converter</h1>
+      <p class="description">Experience the power of our cutting-edge image conversion technology. Transform your images into stunning, high-quality JPEGs that retain their original brilliance and detail.</p>
+      <label class="btn btn-primary" for="imageInput">Choose an Image</label>
+      <input type="file" id="imageInput" accept="image/*">
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h2 class="section-header">Image Preview</h2>
+            <img id="preview" src="" alt="Preview">
+          </div>
+          <div class="col-md-6">
+            <h2 class="section-header">Conversion Process</h2>
+            <p class="description">Witness our advanced conversion process that employs state-of-the-art algorithms to deliver high-quality JPEG images. Experience the future of image transformation.</p>
+            <button id="convertBtn" class="btn btn-success">Convert to JPG</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section text-center">
+      <h2 class="section-header">Download Your Masterpiece</h2>
+      <p class="description">With a single click, download your newly converted JPEG masterpiece. Share it, print it, and showcase its brilliance to the world.</p>
+      <a id="downloadLink" style="display: none;"></a>
+    </section>
+
+    <section class="section text-center">
+      <h2 class="section-header">Features That Define the Future</h2>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="feature-icon">🚀</div>
+            <h3 class="feature-title">Lightning-Fast Conversion</h3>
+            <p class="description">Our technology ensures rapid conversion without compromising on quality, letting you embrace the future with speed.</p>
+          </div>
+          <div class="col-md-4">
+            <div class="feature-icon">🌈</div>
+            <h3 class="feature-title">Vibrant Color Preservation</h3>
+            <p class="description">Colors are preserved with utmost accuracy, giving you a glimpse of the vibrant future in every image.</p>
+          </div>
+          <div class="col-md-4">
+            <div class="feature-icon">🔍</div>
+            <h3 class="feature-title">Uncompromising Detail</h3>
+            <p class="description">Every intricate detail is captured flawlessly, allowing you to experience the future in stunning clarity.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const imageInput = document.getElementById('imageInput');
+    const canvas = document.createElement('canvas');
+    const convertBtn = document.getElementById('convertBtn');
+    const preview = document.getElementById('preview');
+    const downloadLink = document.getElementById('downloadLink');
+
+    imageInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function(event) {
+        const img = new Image();
+        img.onload = function() {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+          preview.src = canvas.toDataURL('image/jpeg');
+          preview.style.display = 'block';
+        };
+        img.src = event.target.result;
+      };
+
+      reader.readAsDataURL(file);
+    });
+
+    convertBtn.addEventListener('click', function() {
+      const link = document.createElement('a');
+      link.href = canvas.toDataURL('image/jpeg');
+      link.download = 'converted_image.jpg';
+      link.click();
+    });
+  </script>
+</body>
+</html>
+
+
